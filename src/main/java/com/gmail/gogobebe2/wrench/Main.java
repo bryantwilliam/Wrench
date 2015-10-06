@@ -48,7 +48,11 @@ public class Main extends JavaPlugin implements Listener {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (label.equalsIgnoreCase("wrench") || label.equalsIgnoreCase("getwrench")) {
-            if (!(sender instanceof Player)) {
+            if (!sender.hasPermission("wrench.*")) {
+                sender.sendMessage(ChatColor.RED + "Error! You do not have permission to use this command!");
+                return true;
+            }
+            else if (!(sender instanceof Player)) {
                 sender.sendMessage(ChatColor.RED + "Error! You need to be a player to use this command.");
                 return true;
             }

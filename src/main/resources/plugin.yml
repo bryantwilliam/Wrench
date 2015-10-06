@@ -1,5 +1,5 @@
 name: Wrench
-version: 1.0.2-DEVELOPMENT-SNAPSHOT
+version: 1.0.4-DEVELOPMENT-SNAPSHOT
 main: com.gmail.gogobebe2.wrench.Main
 description: Creates a wrench that can break mob spawners.
 author: William Bryant (gogobebe2)
@@ -7,3 +7,6 @@ website: gogobebe2@gmail.com
 commands:
   wrench:
     aliases: [getwrench]
+permissions:
+  wrench.*:
+    default: op
