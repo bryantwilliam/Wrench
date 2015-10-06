@@ -82,7 +82,7 @@ public class Main extends JavaPlugin implements Listener {
                     mobSpawnerItem.setItemMeta(meta);
                     player.setItemInHand(mobSpawnerItem);
                     player.getWorld().playSound(player.getLocation(), Sound.ITEM_BREAK, 1, 1);
-                    player.getWorld().playEffect(player.getLocation(), Effect.ITEM_BREAK, null);
+                    player.getWorld().playEffect(player.getLocation(), Effect.ITEM_BREAK, Material.DIAMOND_PICKAXE);
                     player.sendMessage(ChatColor.BLUE + "Wrench used!");
                 }
                 event.setCancelled(true);
@@ -100,7 +100,7 @@ public class Main extends JavaPlugin implements Listener {
                 if (lore1.contains(" spawner")) {
                     String entityName = ChatColor.stripColor(lore1.replace(" spawner", ""));
                     for (EntityType type : EntityType.values()) {
-                        if (type.getEntityClass().getName().equals(entityName)) {
+                        if (type.getEntityClass() != null && type.getEntityClass().getName().equals(entityName)) {
                             Block spawner = event.getBlockPlaced();
                             CreatureSpawner state = (CreatureSpawner) spawner.getState();
                             state.setSpawnedType(type);
