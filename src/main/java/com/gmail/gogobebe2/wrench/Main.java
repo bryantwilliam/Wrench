@@ -80,7 +80,9 @@ public class Main extends JavaPlugin implements Listener {
                     ItemStack mobSpawnerItem = new ItemStack(Material.MOB_SPAWNER, 1);
                     ItemMeta meta = mobSpawnerItem.getItemMeta();
                     List<String> lore = new ArrayList<>();
-                    lore.add(ChatColor.BLUE + ((CreatureSpawner) block.getState()).getSpawnedType().getEntityClass().getName() + " spawner");
+                    String[] splitName = ((CreatureSpawner) block.getState()).getSpawnedType().getEntityClass().getName().split(".");
+                    String name = splitName[splitName.length - 1];
+                    lore.add(ChatColor.BLUE + name + " spawner");
                     block.setType(Material.AIR);
                     meta.setLore(lore);
                     mobSpawnerItem.setItemMeta(meta);
@@ -104,7 +106,9 @@ public class Main extends JavaPlugin implements Listener {
                 if (lore1.contains(" spawner")) {
                     String entityName = ChatColor.stripColor(lore1.replace(" spawner", ""));
                     for (EntityType type : EntityType.values()) {
-                        if (type.getEntityClass() != null && type.getEntityClass().getName().equals(entityName)) {
+                        String[] comparingSplit = type.getEntityClass().getName().split(".");
+                        String comparingName = comparingSplit[comparingSplit.length - 1];
+                        if (type.getEntityClass() != null && comparingName.equals(entityName)) {
                             Block spawner = event.getBlockPlaced();
                             CreatureSpawner state = (CreatureSpawner) spawner.getState();
                             state.setSpawnedType(type);
