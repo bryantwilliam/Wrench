@@ -11,7 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -72,14 +71,13 @@ public class Main extends JavaPlugin implements Listener {
             if (itemMeta.hasDisplayName() && itemMeta.getDisplayName().equals(wrenchMeta.getDisplayName())
                     && itemMeta.hasLore() && itemMeta.getLore().equals(wrenchMeta.getLore())) {
                 // Then the item is a wrench.
-                event.setCancelled(true);
                 Block block = event.getBlock();
                 if (block.getType() == Material.MOB_SPAWNER) {
                     ItemStack mobSpawnerItem = new ItemStack(Material.MOB_SPAWNER, 1);
                     ItemMeta meta = mobSpawnerItem.getItemMeta();
-                    meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
                     List<String> lore = new ArrayList<>();
                     lore.add(ChatColor.BLUE + ((CreatureSpawner) block.getState()).getSpawnedType().getEntityClass().getName() + " spawner");
+                    block.setType(Material.AIR);
                     meta.setLore(lore);
                     mobSpawnerItem.setItemMeta(meta);
                     player.setItemInHand(mobSpawnerItem);
@@ -87,6 +85,7 @@ public class Main extends JavaPlugin implements Listener {
                     player.getWorld().playEffect(player.getLocation(), Effect.ITEM_BREAK, null);
                     player.sendMessage(ChatColor.BLUE + "Wrench used!");
                 }
+                event.setCancelled(true);
             }
         }
     }
