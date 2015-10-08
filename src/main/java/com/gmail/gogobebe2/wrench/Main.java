@@ -90,10 +90,8 @@ public class Main extends JavaPlugin implements Listener {
                     mobSpawnerItem.setItemMeta(meta);
                     player.setItemInHand(mobSpawnerItem);
                     player.getWorld().playSound(player.getLocation(), Sound.ITEM_BREAK, 1, 1);
-                    player.getWorld().playEffect(player.getLocation(), Effect.ITEM_BREAK, Material.DIAMOND_PICKAXE);
                     player.sendMessage(ChatColor.BLUE + "Wrench used!");
                 }
-                event.setCancelled(true);
             }
         }
     }
@@ -113,9 +111,7 @@ public class Main extends JavaPlugin implements Listener {
                             String[] comparingSplit = type.getEntityClass().getName().split("\\.");
                             String comparingName = comparingSplit[comparingSplit.length - 1];
                             if (comparingName != null && comparingName.equals(entityName)) {
-                                event.setCancelled(true);
                                 Block spawner = event.getBlockPlaced();
-                                spawner.setType(Material.MOB_SPAWNER);
                                 CreatureSpawner state = (CreatureSpawner) spawner.getState();
                                 state.setSpawnedType(type);
                                 state.update(true);
