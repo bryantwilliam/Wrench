@@ -12,9 +12,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
-      <library name="Maven: org.spigotmc:spigot-api:1.7.10-R0.1">
+      <library name="Maven: org.spigotmc:spigot-api:LATEST">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/spigot-1.7.10-R0.1-SNAPSHOTBuild1646.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/spigot.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

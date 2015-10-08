@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -65,8 +66,9 @@ public class Main extends JavaPlugin implements Listener {
         return false;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     protected void onBlockBreak(BlockBreakEvent event) {
+        if (event.isCancelled()) return;
         Player player = event.getPlayer();
         ItemStack item = player.getItemInHand();
         if (item != null && item.getType() == WRENCH.getType() && item.hasItemMeta()) {
@@ -96,8 +98,9 @@ public class Main extends JavaPlugin implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     protected void onBlockPlace(BlockPlaceEvent event) {
+        if (event.isCancelled()) return;
         ItemStack item = event.getItemInHand();
         if (item.getType() == Material.MOB_SPAWNER && item.hasItemMeta()) {
             ItemMeta meta = item.getItemMeta();
@@ -110,7 +113,9 @@ public class Main extends JavaPlugin implements Listener {
                             String[] comparingSplit = type.getEntityClass().getName().split("\\.");
                             String comparingName = comparingSplit[comparingSplit.length - 1];
                             if (comparingName != null && comparingName.equals(entityName)) {
+                                event.setCancelled(true);
                                 Block spawner = event.getBlockPlaced();
+                                spawner.setType(Material.MOB_SPAWNER);
                                 CreatureSpawner state = (CreatureSpawner) spawner.getState();
                                 state.setSpawnedType(type);
                                 state.update(true);
